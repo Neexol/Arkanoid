@@ -1,29 +1,23 @@
 #include "Brick.h"
 
 Brick::Brick()
-	:Entity(0, 0, 80, 40, "images/brick.png"), type{ DEFAULT } {}
+	:Entity(0.f, 0.f, valueNS::brickWidth, valueNS::brickHeight, "images/brick.png"), status{ StatusBrick::NORMAL } {}
 
-Brick::Brick(float X, float Y, int Width, int Height, std::string textureStr, TypeBricks Type, int value)
-	:Entity(X, Y, Width, Height, textureStr), type{Type}
+Brick::Brick(float X, float Y, int Width, int Height, std::string textureStr, int value)
+	:Entity(X, Y, Width, Height, textureStr), status{(StatusBrick)value}
 {
-}
-
-void Brick::setTexture(std::string& texture)
-{
-	sf::Texture t;
-	t.loadFromFile(texture);
-	sprite.setTexture(t);
 }
 
 void Brick::activate()
 {
-	switch (type)
+	if (status == NORMAL)
 	{
-	case DEFAULT:
-		this->setPosition({ -100, -100 });
-		break;
-	default:
-		break;
+		status = CRASHED;
+		this->setTexture(brickCrashedPath);
+	}
+	else
+	{
+		this->setPosition({ -100.f, -100.f });
 	}
 }
 

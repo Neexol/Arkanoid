@@ -6,7 +6,7 @@ BrickTable::BrickTable()
 	{
 		for (int j = 0; j < width; j++)
 		{
-			table[i][j].setPosition(sf::Vector2f{80.f * i, 40.f * j});
+			table[i][j].setPosition(sf::Vector2f{ (float)valueNS::brickWidth * i, 2.f * valueNS::wallHeight + valueNS::brickHeight * j});
 		}
 	}
 }

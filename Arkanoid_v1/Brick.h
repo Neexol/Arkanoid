@@ -1,22 +1,24 @@
 #pragma once
 #include "Entity.h"
 
-enum TypeBricks
-{
-	DEFAULT
-};
-
 class Brick : public Entity
 {
 private:
-	TypeBricks type;
+
+	enum StatusBrick
+	{
+		CRASHED,
+		NORMAL
+	};
+
+	StatusBrick status;
+
+	std::string brickCrashedPath = "images/brick_crashed.png";
 
 public:
 
 	Brick();
-	Brick(float X, float Y, int Width, int Height, std::string textureStr, TypeBricks Type, int value = 0);
-
-	void setTexture(std::string& texture);
+	Brick(float X, float Y, int Width, int Height, std::string textureStr, int value = 0);
 
 	void activate();
 

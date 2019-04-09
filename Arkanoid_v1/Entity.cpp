@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+Entity::Entity(){}
+
 Entity::Entity(float X, float Y, int Width, int Height, const std::string& textureStr)
 	: x{ X }, y{ Y }, height{ Height }, width{ Width }
 {
@@ -30,6 +32,17 @@ void Entity::move(sf::Vector2f vector)
 	x += vector.x;
 	y += vector.y;
 	sprite.setPosition(x, y);
+}
+
+void Entity::setTexture(std::string& textureStr) 
+{
+	texture.loadFromFile(textureStr);
+	sprite.setTexture(texture);
+}
+
+void Entity::setScale(float x, float y)
+{
+	sprite.setScale(x, y);
 }
 
 Entity::~Entity()

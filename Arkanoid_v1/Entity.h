@@ -1,8 +1,8 @@
-#ifndef ENTITY
-#define ENTITY
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "Values.h"
 
 class Entity
 {
@@ -13,6 +13,7 @@ protected:
 	sf::Sprite sprite;
 	
 public:
+	Entity();
 	Entity(float X, float Y, int Width, int Height, const std::string& textureStr);
 
 	sf::Vector2f getPosition() { return sf::Vector2f{ x, y }; }
@@ -27,9 +28,11 @@ public:
 
 	void move(sf::Vector2f vector);
 
+	void setTexture(std::string& texture);
+
+	void setScale(float x, float y);
+
 	bool isCollide(Entity& e);
 
 	~Entity();
 };
-
-#endif // !ENTITY

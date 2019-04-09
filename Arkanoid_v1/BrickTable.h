@@ -4,8 +4,8 @@
 class BrickTable
 {
 private:
-	const static int height = 10;
-	const static int width = 8;
+	const static int height = valueNS::brickTableWidth;
+	const static int width = valueNS::brickTableHeight;
 	Brick table[height][width];
 
 public:
