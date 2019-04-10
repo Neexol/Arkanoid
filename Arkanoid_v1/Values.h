@@ -3,11 +3,13 @@
 
 namespace valueNS
 {
-	constexpr int windowWidth = 1000;
-	constexpr int windowHeight = 750;
+	constexpr int windowWidth = 800;
+	constexpr int windowHeight = 600;
 
 	constexpr int paddleWidth = 100;
 	constexpr int paddleHeight = 21;
+	constexpr int paddleRectWidth = 80;
+	constexpr int paddleBorderRadius = 10;
 	const sf::Vector2f paddleSpeed { 600, 0 };
 
 	constexpr int brickWidth = 80;
@@ -22,6 +24,6 @@ namespace valueNS
 	constexpr int wallWidth = 32;
 	constexpr int wallHeight = 32;
 
-	constexpr int brickTableWidth = 1;
-	constexpr int brickTableHeight = 2;
+	constexpr int brickTableWidth = 10;
+	constexpr int brickTableHeight = 8;
 }

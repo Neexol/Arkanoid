@@ -1,13 +1,17 @@
 #pragma once
 #include "Entity.h"
 
-class SpeedEntity : public Entity
+class Ball : public Entity
 {
+public:
+	sf::Vector2f previousPosition;
 public:
 	sf::Vector2f speed;
 	
-	SpeedEntity();
-	SpeedEntity(float X, float Y, int Width, int Height, std::string textureStr, sf::Vector2f Speed);
+	Ball();
+	Ball(float X, float Y, int Width, int Height, std::string textureStr, sf::Vector2f Speed);
+	void move(sf::Vector2f vector);
+	void toggleFire();
 
-	~SpeedEntity();
+	~Ball();
 };

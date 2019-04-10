@@ -25,7 +25,6 @@ void Game::update(sf::RenderWindow& window)
 			bricks.checkCollision(ball)
 			|| (ballPosition.x > window.getSize().x - ball.getHeight() && ball.speed.x > 0
 				|| ballPosition.x < 0 && ball.speed.x < 0)
-			|| paddle.isCollide(ball) && ((paddle.getPosition().x - ball.getPosition().x) * ball.speed.x) > 0
 			)
 		{
 			ball.move({ -ball.speed.x * dt, 0 });
@@ -36,7 +35,7 @@ void Game::update(sf::RenderWindow& window)
 		if (
 			bricks.checkCollision(ball)
 			|| ballPosition.y < valueNS::wallHeight * 2 && ball.speed.y < 0
-			|| paddle.isCollide(ball) && ball.speed.y > 0
+			|| paddle.isCollideSpeed(ball) && ball.speed.y > 0
 			)
 		{
 			ball.move({ 0, -ball.speed.y * dt });
@@ -48,6 +47,7 @@ void Game::update(sf::RenderWindow& window)
 			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight});
 			ball.setPosition({ (window.getSize().x - valueNS::ballSize ) / 2.f, (float)paddle.getPosition().y - ball.getHeight() });
 			ball.speed = valueNS::ballSpeed;
+			ball.toggleFire();
 			window.clear();
 			bricks.show(window);
 			ball.show(window);
@@ -76,8 +76,8 @@ void Game::update(sf::RenderWindow& window)
 	}
 	else
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { ball.speed = { -300, -300 }; playable = true; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { ball.speed = { 300, -300 }; playable = true; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { ball.speed = valueNS::ballSpeed; ball.speed.x *= -1; playable = true; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { ball.speed = valueNS::ballSpeed; playable = true; }
 	}
 }
 
