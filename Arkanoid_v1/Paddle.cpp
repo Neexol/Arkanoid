@@ -13,15 +13,24 @@ bool Paddle::isCollideSpeed(Ball& e)
 {
 	if (this->getRect().intersects(e.getRect()))
 	{
-		if ((getPosition().x - previousPosition.x) * (e.getPosition().x - e.previousPosition.x >= 0))
-			e.speed.x += e.speed.x > 0 ? 20 : -20; else
-			e.speed.x += e.speed.x < 0 ? 20 : -20;
+		if (((getPosition().x - previousPosition.x) * e.speed.x) >= 0)
+			e.speed.x += e.speed.x > 0 ? valueNS::ballVelocity : -valueNS::ballVelocity; else
+			e.speed.x += e.speed.x < 0 ? valueNS::ballVelocity : -valueNS::ballVelocity;
 		e.toggleFire();
+		std::cout << "Ball speed X: " << abs(e.speed.x) << std::endl;
 
 		return true;
 	}
 
 	return false;
+}
+
+void Paddle::move(sf::Vector2f vector)
+{
+	previousPosition = this->getPosition();
+	x += vector.x;
+	y += vector.y;
+	sprite.setPosition(x, y);
 }
 
 Paddle::~Paddle()

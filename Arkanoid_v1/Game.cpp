@@ -20,11 +20,12 @@ void Game::update(sf::RenderWindow& window)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && paddle.getPosition().x > 0) { paddle.move({ -paddle.speed.x * dt, 0 }); }
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && paddle.getPosition().x < window.getSize().x - paddle.getWidth()) { paddle.move({ paddle.speed.x * dt, 0 }); }
 
-		ball.move({ ball.speed.x * dt, 0 });
+		ball.move({ ball.speed.x * dt, 0});
 		if (
 			bricks.checkCollision(ball)
 			|| (ballPosition.x > window.getSize().x - ball.getHeight() && ball.speed.x > 0
-				|| ballPosition.x < 0 && ball.speed.x < 0)
+			|| ballPosition.x < 0 && ball.speed.x < 0)
+			|| paddle.isCollide(ball) && ((paddle.getPosition().x - ball.getPosition().x) * ball.speed.x) > 0
 			)
 		{
 			ball.move({ -ball.speed.x * dt, 0 });

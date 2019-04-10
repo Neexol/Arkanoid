@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Ball.h"
 
 class Brick : public Entity
 {
@@ -20,7 +21,7 @@ public:
 	Brick();
 	Brick(float X, float Y, int Width, int Height, std::string textureStr, int value = 0);
 
-	void activate();
+	void activate(const Entity& ball);
 
 	~Brick();
 };

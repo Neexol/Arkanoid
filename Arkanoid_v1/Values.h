@@ -4,7 +4,7 @@
 namespace valueNS
 {
 	constexpr int windowWidth = 800;
-	constexpr int windowHeight = 600;
+	constexpr int windowHeight = 800;
 
 	constexpr int paddleWidth = 100;
 	constexpr int paddleHeight = 21;
@@ -17,6 +17,7 @@ namespace valueNS
 
 	constexpr int ballSize = 12;
 	const sf::Vector2f ballSpeed{ 300, -300 };
+	constexpr int ballVelocity = 31;
 
 	constexpr int backgroundWidth = 208;
 	constexpr int backgroundHeight = 232;

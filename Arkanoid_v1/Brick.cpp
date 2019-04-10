@@ -8,16 +8,16 @@ Brick::Brick(float X, float Y, int Width, int Height, std::string textureStr, in
 {
 }
 
-void Brick::activate()
+void Brick::activate(const Entity& ball)
 {
-	if (status == NORMAL)
+	if (ball.isFireBall() || status == CRASHED)
 	{
-		status = CRASHED;
-		this->setTexture(brickCrashedPath);
+		this->setPosition({ -100.f, -100.f });
 	}
 	else
 	{
-		this->setPosition({ -100.f, -100.f });
+		status = CRASHED;
+		this->setTexture(brickCrashedPath);
 	}
 }
 

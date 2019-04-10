@@ -11,6 +11,8 @@ protected:
 	int width, height;
 	sf::Texture texture;
 	sf::Sprite sprite;
+
+	bool fireBall = false;
 	
 public:
 	Entity();
@@ -33,6 +35,8 @@ public:
 	void setScale(float x, float y);
 
 	bool isCollide(Entity& e);
+
+	bool isFireBall() const { return fireBall; }
 
 	~Entity();
 };
