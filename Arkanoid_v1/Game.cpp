@@ -2,10 +2,37 @@
 
 Game::Game(sf::RenderWindow& window)
 {
-	background.loadFromFile("images/background.png");
-	backgroundSprite.setTexture(background);
+	backgroundTexture.loadFromFile("images/background.png");
+	backgroundSprite.setTexture(backgroundTexture);
 	backgroundSprite.setScale((float)valueNS::windowWidth / valueNS::backgroundWidth, (float)valueNS::windowWidth / valueNS::backgroundWidth);
 	backgroundSprite.setColor(sf::Color::Green);
+	
+	arrowsTexture.loadFromFile("images/arrow.png");
+	arrowsSprite.setTexture(arrowsTexture);
+	arrowsSprite.setColor(sf::Color::Green);
+	arrowsSprite.setPosition(0, 0);
+	arrowsSprite.setOrigin(valueNS::arrowWidth + 80, valueNS::arrowHeight / 2.f);
+	arrowsSprite.setPosition(valueNS::windowWidth / 2.f, valueNS::windowHeight - valueNS::arrowHeight / 2.f - valueNS::paddleHeight);
+
+	window.clear();
+	window.draw(backgroundSprite);
+	window.draw(arrowsSprite);
+	arrowsSprite.setRotation(180);
+	window.draw(arrowsSprite);
+
+	for (size_t i = 0; i < 2; i++)
+	{
+		for (size_t j = 0; j < valueNS::windowWidth / valueNS::wallWidth + 1; j++)
+		{
+			wall.setPosition({ j * (float)valueNS::wallHeight, i * (float)valueNS::wallWidth });
+			wall.show(window);
+		}
+	}
+
+	bricks.show(window);
+	ball.show(window);
+	paddle.show(window);
+	window.display();
 }
 
 
@@ -43,23 +70,22 @@ void Game::update(sf::RenderWindow& window)
 			ball.speed.y *= -1;
 		}
 
+		window.clear();
+		window.draw(backgroundSprite);
+
 		if (ballPosition.y > window.getSize().y - ball.getHeight() && ball.speed.y > 0)
 		{
 			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight});
 			ball.setPosition({ (window.getSize().x - valueNS::ballSize ) / 2.f, (float)paddle.getPosition().y - ball.getHeight() });
-			ball.speed = valueNS::ballSpeed;
+			ball.speed = sf::Vector2f{ 0.f, 0.f };
 			ball.toggleFire();
-			window.clear();
-			bricks.show(window);
-			ball.show(window);
-			paddle.show(window);
-			window.display();
+
+			window.draw(arrowsSprite);
+			arrowsSprite.rotate(180);
+			window.draw(arrowsSprite);
 
 			playable = false;
 		}
-
-		window.clear();
-		window.draw(backgroundSprite);
 
 		for (size_t i = 0; i < 2; i++)
 		{

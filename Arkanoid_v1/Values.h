@@ -27,4 +27,7 @@ namespace valueNS
 
 	constexpr int brickTableWidth = 10;
 	constexpr int brickTableHeight = 8;
+
+	constexpr int arrowWidth = 40;
+	constexpr int arrowHeight = 50;
 }
