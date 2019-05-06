@@ -17,17 +17,21 @@ namespace valueNS
 
 	constexpr int ballSize = 12;
 	const sf::Vector2f ballSpeed{ 300, -300 };
-	constexpr int ballVelocity = 31;
+	constexpr int ballVelocity = 71;
+	constexpr int fireBallSpeed = 500;
 
 	constexpr int backgroundWidth = 208;
 	constexpr int backgroundHeight = 232;
 
-	constexpr int wallWidth = 32;
-	constexpr int wallHeight = 32;
+	constexpr int wallWidth = 800;
+	constexpr int wallHeight = 64;
 
-	constexpr int brickTableWidth = 10;
-	constexpr int brickTableHeight = 8;
+	constexpr int brickTableWidth = 9;
+	constexpr int brickTableHeight = 7;
 
 	constexpr int arrowWidth = 40;
 	constexpr int arrowHeight = 50;
+
+	constexpr int health = 3;
+	constexpr int maxLevel = 2;
 }

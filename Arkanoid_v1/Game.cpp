@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game(sf::RenderWindow& window)
 {
@@ -14,19 +15,21 @@ Game::Game(sf::RenderWindow& window)
 	arrowsSprite.setOrigin(valueNS::arrowWidth + 80, valueNS::arrowHeight / 2.f);
 	arrowsSprite.setPosition(valueNS::windowWidth / 2.f, valueNS::windowHeight - valueNS::arrowHeight / 2.f - valueNS::paddleHeight);
 
+	heartTexture.loadFromFile("images/heart.png");
+	heartSprite.setTexture(heartTexture);
+
 	window.clear();
+
 	window.draw(backgroundSprite);
 	window.draw(arrowsSprite);
 	arrowsSprite.setRotation(180);
 	window.draw(arrowsSprite);
+	wall.show(window);
 
-	for (size_t i = 0; i < 2; i++)
+	for (int i = 1; i <= health; i++)
 	{
-		for (size_t j = 0; j < valueNS::windowWidth / valueNS::wallWidth + 1; j++)
-		{
-			wall.setPosition({ j * (float)valueNS::wallHeight, i * (float)valueNS::wallWidth });
-			wall.show(window);
-		}
+		heartSprite.setPosition(valueNS::windowWidth - (40 * i + 10), 19);
+		window.draw(heartSprite);
 	}
 
 	bricks.show(window);
@@ -40,7 +43,7 @@ void Game::update(sf::RenderWindow& window)
 {
 	auto dt = clock.restart().asSeconds();
 
-	if (playable)
+	if (playable && health > 0)
 	{
 		auto ballPosition = ball.getPosition();
 
@@ -62,7 +65,7 @@ void Game::update(sf::RenderWindow& window)
 		ball.move({ 0, ball.speed.y * dt });
 		if (
 			bricks.checkCollision(ball)
-			|| ballPosition.y < valueNS::wallHeight * 2 && ball.speed.y < 0
+			|| ballPosition.y < valueNS::wallHeight && ball.speed.y < 0
 			|| paddle.isCollideSpeed(ball) && ball.speed.y > 0
 			)
 		{
@@ -75,8 +78,10 @@ void Game::update(sf::RenderWindow& window)
 
 		if (ballPosition.y > window.getSize().y - ball.getHeight() && ball.speed.y > 0)
 		{
-			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight});
-			ball.setPosition({ (window.getSize().x - valueNS::ballSize ) / 2.f, (float)paddle.getPosition().y - ball.getHeight() });
+			health--;
+
+			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight });
+			ball.setPosition({ (window.getSize().x - valueNS::ballSize) / 2.f, (float)paddle.getPosition().y - ball.getHeight() });
 			ball.speed = sf::Vector2f{ 0.f, 0.f };
 			ball.toggleFire();
 
@@ -87,24 +92,62 @@ void Game::update(sf::RenderWindow& window)
 			playable = false;
 		}
 
-		for (size_t i = 0; i < 2; i++)
+		if (bricks.getNumberOfDeletedBricks() == valueNS::brickTableHeight * valueNS::brickTableWidth)
 		{
-			for (size_t j = 0; j < valueNS::windowWidth / valueNS::wallWidth + 1; j++)
-			{
-				wall.setPosition({ j * (float)valueNS::wallHeight, i * (float)valueNS::wallWidth });
-				wall.show(window);
-			}
+			level++;
+			std::cout << std::endl << "Current level: " << level << std::endl;
+			bricks.newTable();
+
+			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight });
+			ball.setPosition({ (window.getSize().x - valueNS::ballSize) / 2.f, (float)paddle.getPosition().y - ball.getHeight() });
+			ball.speed = sf::Vector2f{ 0.f, 0.f };
+			ball.toggleFire();
+
+			window.draw(arrowsSprite);
+			arrowsSprite.rotate(180);
+			window.draw(arrowsSprite);
+
+			playable = false;
+		}
+
+		wall.show(window);
+
+		for (int i = 1; i <= health; i++)
+		{
+			heartSprite.setPosition(valueNS::windowWidth - (40 * i + 10), 20);
+			window.draw(heartSprite);
 		}
 
 		bricks.show(window);
 		ball.show(window);
 		paddle.show(window);
+
+		if (!health)
+		{
+			sf::Texture gameOverTexture;
+			gameOverTexture.loadFromFile("images/GameOver.png");
+			sf::Sprite gameOverSprite;
+			gameOverSprite.setTexture(gameOverTexture);
+			window.clear();
+			window.draw(gameOverSprite);
+		}
+
+		if (level == valueNS::maxLevel + 1)
+		{
+			sf::Texture youWinTexture;
+			youWinTexture.loadFromFile("images/YouWin.png");
+			sf::Sprite youWinSprite;
+			youWinSprite.setTexture(youWinTexture);
+			window.clear();
+			window.draw(youWinSprite);
+		}
+
 		window.display();
 	}
-	else
+	else if (!playable && health > 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { ball.speed = valueNS::ballSpeed; ball.speed.x *= -1; playable = true; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { ball.speed = valueNS::ballSpeed; playable = true; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && health) { ball.speed = valueNS::ballSpeed; ball.speed.x *= -1; playable = true; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && health) { ball.speed = valueNS::ballSpeed; playable = true; }
 	}
 }
 

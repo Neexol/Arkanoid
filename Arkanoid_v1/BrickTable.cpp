@@ -1,5 +1,6 @@
 #include "BrickTable.h"
 #include <ctime>
+#include <iostream>
 
 BrickTable::BrickTable()
 {
@@ -9,8 +10,17 @@ BrickTable::BrickTable()
 		for (int j = 0; j < width; j++)
 		{
 			if (rand() % 2)
-				table[i][j].setPosition(sf::Vector2f{ (float)valueNS::brickWidth * i, 2.f * valueNS::wallHeight + valueNS::brickHeight * j}); else
-				table[i][j].setPosition(sf::Vector2f{ -100.f, -100.f});
+			{
+				table[i][j].setPosition(sf::Vector2f{ 40 + (float)valueNS::brickWidth * i, 37 + (float)valueNS::wallHeight + valueNS::brickHeight * j });
+				if (rand() % 2)
+					if (table[i][j].activate(Entity()))
+						numberOfDeletedBricks++;
+			}
+			else
+			{
+				table[i][j].setPosition(sf::Vector2f{ -100.f, -100.f });
+				numberOfDeletedBricks++;
+			}
 		}
 	}
 }
@@ -34,13 +44,38 @@ bool BrickTable::checkCollision(Entity& ball)
 		{
 			if (table[i][j].isCollide(ball))
 			{
-				table[i][j].activate(ball);
+				if (table[i][j].activate(ball))
+					numberOfDeletedBricks++;
 				return true;
 			}
 		}
 	}
 
 	return false;
+}
+
+void BrickTable::newTable()
+{
+	numberOfDeletedBricks = 0;
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			if (rand() % 2)
+			{
+				table[i][j].setPosition(sf::Vector2f{ 40 + (float)valueNS::brickWidth * i, 37 + (float)valueNS::wallHeight + valueNS::brickHeight * j });
+				if (rand() % 2)
+					if (table[i][j].activate(Entity()))
+						numberOfDeletedBricks++;
+			}
+			else
+			{
+				table[i][j].setPosition(sf::Vector2f{ -100.f, -100.f });
+				numberOfDeletedBricks++;
+			}
+		}
+	}
 }
 
 BrickTable::~BrickTable()

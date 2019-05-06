@@ -14,7 +14,7 @@ private:
 		valueNS::ballSize, valueNS::ballSize, "images/ball.png", { 0.f, 0.f });
 	Paddle paddle = Paddle((valueNS::windowWidth - valueNS::paddleWidth) / 2, valueNS::windowHeight - valueNS::paddleHeight,
 		valueNS::paddleWidth, valueNS::paddleHeight, "images/paddle.png", valueNS::paddleSpeed);
-	Entity wall = Entity(0.f, 0.f, valueNS::wallWidth, valueNS::wallHeight, "images/wall.png");
+	Entity wall = Entity(0.f, 0.f, valueNS::wallWidth, valueNS::wallHeight, "images/green-panel.png");
 
 	sf::Clock clock;
 
@@ -24,7 +24,13 @@ private:
 	sf::Texture arrowsTexture;
 	sf::Sprite arrowsSprite;
 
+	sf::Texture heartTexture;
+	sf::Sprite heartSprite;
+
 	bool playable = false;
+
+	int health = valueNS::health;
+	int level = 1;
 
 public:
 	Game(sf::RenderWindow& window);

@@ -8,7 +8,7 @@ Ball::Ball(float X, float Y, int Width, int Height, std::string textureStr, sf::
 
 void Ball::toggleFire()
 {
-	if (abs(speed.x) > 500)
+	if (abs(speed.x) > valueNS::fireBallSpeed)
 	{
 		sprite.setColor(sf::Color(255, 0, 0));
 		fireBall = true;

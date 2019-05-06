@@ -21,7 +21,7 @@ public:
 	Brick();
 	Brick(float X, float Y, int Width, int Height, std::string textureStr, int value = 0);
 
-	void activate(const Entity& ball);
+	bool activate(const Entity& ball);
 
 	~Brick();
 };
