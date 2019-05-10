@@ -3,11 +3,6 @@
 
 Game::Game(sf::RenderWindow& window)
 {
-	backgroundTexture.loadFromFile("images/background.png");
-	backgroundSprite.setTexture(backgroundTexture);
-	backgroundSprite.setScale((float)valueNS::windowWidth / valueNS::backgroundWidth, (float)valueNS::windowWidth / valueNS::backgroundWidth);
-	backgroundSprite.setColor(sf::Color::Green);
-	
 	arrowsTexture.loadFromFile("images/arrow.png");
 	arrowsSprite.setTexture(arrowsTexture);
 	arrowsSprite.setColor(sf::Color::Green);
@@ -18,9 +13,17 @@ Game::Game(sf::RenderWindow& window)
 	heartTexture.loadFromFile("images/heart.png");
 	heartSprite.setTexture(heartTexture);
 
+	font.loadFromFile("Comfortaa[wght].ttf");
+	levelText.setFont(font);
+	levelText.setString("Level 1");
+	levelText.setPosition(17, 10);
+	levelText.setFillColor(sf::Color(31, 42, 0));
+	levelText.setCharacterSize(30);
+	levelText.setStyle(sf::Text::Bold);
+	
 	window.clear();
 
-	window.draw(backgroundSprite);
+	background.show(window);
 	window.draw(arrowsSprite);
 	arrowsSprite.setRotation(180);
 	window.draw(arrowsSprite);
@@ -32,12 +35,54 @@ Game::Game(sf::RenderWindow& window)
 		window.draw(heartSprite);
 	}
 
+	window.draw(levelText);
+
 	bricks.show(window);
 	ball.show(window);
 	paddle.show(window);
 	window.display();
 }
 
+void Game::menu(sf::RenderWindow& window)
+{
+	Entity menu = Entity(0.f, 0.f, valueNS::windowHeight, valueNS::windowWidth, "images/menu.png");
+	Entity start = Entity(0.f, 0.f, valueNS::windowHeight, valueNS::windowWidth, "images/start.png");
+	Entity exit = Entity(0.f, 0.f, valueNS::windowHeight, valueNS::windowWidth, "images/exit.png");
+	sf::Event event;
+	window.clear();
+	
+	bool isMenu = true;
+
+	while (isMenu)
+	{
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				window.close();
+			}
+			else if (sf::IntRect(265, 420, 270, 95).contains(sf::Mouse::getPosition(window)))
+			{
+				start.show(window);
+				window.display();
+				if (event.type == sf::Event::MouseButtonPressed)
+					isMenu = false;
+			} 
+			else if (sf::IntRect(286, 564, 226, 84).contains(sf::Mouse::getPosition(window)))
+			{
+				exit.show(window);
+				window.display();
+				if (event.type == sf::Event::MouseButtonPressed)
+					window.close();
+			}
+			else
+			{
+				menu.show(window);
+				window.display();
+			}
+		}
+	}
+}
 
 void Game::update(sf::RenderWindow& window)
 {
@@ -74,7 +119,7 @@ void Game::update(sf::RenderWindow& window)
 		}
 
 		window.clear();
-		window.draw(backgroundSprite);
+		background.show(window);
 
 		if (ballPosition.y > window.getSize().y - ball.getHeight() && ball.speed.y > 0)
 		{
@@ -95,7 +140,8 @@ void Game::update(sf::RenderWindow& window)
 		if (bricks.getNumberOfDeletedBricks() == valueNS::brickTableHeight * valueNS::brickTableWidth)
 		{
 			level++;
-			std::cout << std::endl << "Current level: " << level << std::endl;
+			levelText.setString("Level " + std::to_string(level));
+			levelText.setPosition(10, 10);
 			bricks.newTable();
 
 			paddle.setPosition({ (window.getSize().x - valueNS::paddleWidth) / 2.f, (float)window.getSize().y - valueNS::paddleHeight });
@@ -117,6 +163,8 @@ void Game::update(sf::RenderWindow& window)
 			heartSprite.setPosition(valueNS::windowWidth - (40 * i + 10), 20);
 			window.draw(heartSprite);
 		}
+
+		window.draw(levelText);
 
 		bricks.show(window);
 		ball.show(window);

@@ -6,6 +6,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(valueNS::windowWidth, valueNS::windowHeight), "Arkanoid", sf::Style::Close);
 	window.setFramerateLimit(100);
 
+	Game::menu(window);
+
 	Game game(window);
 
 	while (window.isOpen())

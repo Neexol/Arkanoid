@@ -20,9 +20,6 @@ namespace valueNS
 	constexpr int ballVelocity = 71;
 	constexpr int fireBallSpeed = 500;
 
-	constexpr int backgroundWidth = 208;
-	constexpr int backgroundHeight = 232;
-
 	constexpr int wallWidth = 800;
 	constexpr int wallHeight = 64;
 

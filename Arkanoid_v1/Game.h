@@ -18,14 +18,16 @@ private:
 
 	sf::Clock clock;
 
-	sf::Texture backgroundTexture;
-	sf::Sprite backgroundSprite;
+	Entity background = Entity(0.f, 0.f, valueNS::windowHeight, valueNS::windowWidth, "images/background.png");
 	
 	sf::Texture arrowsTexture;
 	sf::Sprite arrowsSprite;
 
 	sf::Texture heartTexture;
 	sf::Sprite heartSprite;
+
+	sf::Font font;
+	sf::Text levelText;
 
 	bool playable = false;
 
@@ -34,6 +36,8 @@ private:
 
 public:
 	Game(sf::RenderWindow& window);
+
+	void static menu(sf::RenderWindow& window);
 
 	void update(sf::RenderWindow& window);
 
