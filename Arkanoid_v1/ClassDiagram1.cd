@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="BrickTable">
+    <Position X="7.25" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAARAQAQAAAAAAIAAAAAIBAAAAIAAQAA=</HashCode>
+      <FileName>BrickTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="4" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAgAAAAEAAAAAIAgAIAAgAAQmAAAAAAABGAgAEIAg=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ball">
+    <Position X="0.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAQAAAEAAAAAAAIA=</HashCode>
+      <FileName>Ball.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Brick">
+    <Position X="7.25" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Brick::StatusBrick">
+        <TypeIdentifier>
+          <NewMemberFileName>Brick.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAABQAAAAAAAAAAgAAAAAAAAAAQ=</HashCode>
+      <FileName>Brick.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity">
+    <Position X="4" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>UQAAIAAAACAAAASAQAAAAAACADAAUgAiBABgAAAAABA=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Paddle">
+    <Position X="0.75" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAACAAAAAAAAAAgAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Paddle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

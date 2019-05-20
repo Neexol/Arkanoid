@@ -1,6 +1,5 @@
 #include "BrickTable.h"
 #include <ctime>
-#include <iostream>
 
 BrickTable::BrickTable()
 {

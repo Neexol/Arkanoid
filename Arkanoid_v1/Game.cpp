@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <iostream>
 
 Game::Game(sf::RenderWindow& window)
 {
@@ -13,7 +12,7 @@ Game::Game(sf::RenderWindow& window)
 	heartTexture.loadFromFile("images/heart.png");
 	heartSprite.setTexture(heartTexture);
 
-	font.loadFromFile("Comfortaa[wght].ttf");
+	font.loadFromFile("Comfortaa.ttf");
 	levelText.setFont(font);
 	levelText.setString("Level 1");
 	levelText.setPosition(17, 10);
@@ -36,7 +35,6 @@ Game::Game(sf::RenderWindow& window)
 	}
 
 	window.draw(levelText);
-
 	bricks.show(window);
 	ball.show(window);
 	paddle.show(window);
@@ -50,6 +48,8 @@ void Game::menu(sf::RenderWindow& window)
 	Entity exit = Entity(0.f, 0.f, valueNS::windowHeight, valueNS::windowWidth, "images/exit.png");
 	sf::Event event;
 	window.clear();
+	menu.show(window);
+	window.display();
 	
 	bool isMenu = true;
 
@@ -92,8 +92,8 @@ void Game::update(sf::RenderWindow& window)
 	{
 		auto ballPosition = ball.getPosition();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && paddle.getPosition().x > 0) { paddle.move({ -paddle.speed.x * dt, 0 }); }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && paddle.getPosition().x < window.getSize().x - paddle.getWidth()) { paddle.move({ paddle.speed.x * dt, 0 }); }
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && paddle.getPosition().x > 0) { paddle.move({ -paddle.speed.x * dt, 0 }); }
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && paddle.getPosition().x < window.getSize().x - paddle.getWidth()) { paddle.move({ paddle.speed.x * dt, 0 }); }
 
 		ball.move({ ball.speed.x * dt, 0});
 		if (
@@ -194,11 +194,19 @@ void Game::update(sf::RenderWindow& window)
 	}
 	else if (!playable && health > 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && health) { ball.speed = valueNS::ballSpeed; ball.speed.x *= -1; playable = true; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && health) { ball.speed = valueNS::ballSpeed; playable = true; }
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && health)
+		{
+			ball.speed = valueNS::ballSpeed;
+			ball.speed.x *= -1;
+			playable = true;
+		}
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && health)
+		{
+			ball.speed = valueNS::ballSpeed;
+			playable = true;
+		}
 	}
 }
-
 
 Game::~Game()
 {

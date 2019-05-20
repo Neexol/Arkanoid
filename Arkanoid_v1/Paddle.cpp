@@ -1,5 +1,4 @@
 #include "Paddle.h"
-#include <iostream>
 
 Paddle::Paddle()
 {}
@@ -17,7 +16,6 @@ bool Paddle::isCollideSpeed(Ball& e)
 			e.speed.x += e.speed.x > 0 ? valueNS::ballVelocity : -valueNS::ballVelocity; else
 			e.speed.x += e.speed.x < 0 ? valueNS::ballVelocity : -valueNS::ballVelocity;
 		e.toggleFire();
-		std::cout << "Ball speed X: " << abs(e.speed.x) << std::endl;
 
 		return true;
 	}
@@ -28,9 +26,7 @@ bool Paddle::isCollideSpeed(Ball& e)
 void Paddle::move(sf::Vector2f vector)
 {
 	previousPosition = this->getPosition();
-	x += vector.x;
-	y += vector.y;
-	sprite.setPosition(x, y);
+	Ball::move(vector);
 }
 
 Paddle::~Paddle()

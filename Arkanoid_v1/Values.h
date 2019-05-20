@@ -30,5 +30,5 @@ namespace valueNS
 	constexpr int arrowHeight = 50;
 
 	constexpr int health = 3;
-	constexpr int maxLevel = 2;
+	constexpr int maxLevel = 3;
 }
